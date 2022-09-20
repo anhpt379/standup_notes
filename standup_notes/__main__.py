@@ -14,7 +14,7 @@ from pkg_resources import resource_stream
 
 CONFIG_FILE = resource_stream('standup_notes.resources', 'config.json')
 EXT = '.md'
-STANDUP_NOTES = os.path.join(os.environ.get("HOME"), 'code/notes/standup')
+STANDUP_NOTES = os.path.join(os.environ.get("HOME"), 'notes/standup')
 STANDUP_TEMPLATE = resource_stream('standup_notes.resources', 'standup.template')
 STANDUP_TEMPLATE_STRING = str(STANDUP_TEMPLATE.read().decode('UTF-8'))
 
