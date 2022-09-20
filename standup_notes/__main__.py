@@ -157,7 +157,7 @@ def read_note(day: date):
         with open(note, 'r') as f:
             print(f.read())
     else:
-        print(note + ' doesn\'t exist yet.')
+        print('No such file: ' + note)
 
 
 def next_weekday(start_day: date) -> date:
