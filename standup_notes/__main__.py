@@ -149,7 +149,7 @@ def edit_note(day: date):
     """Launches the default $EDITOR or a suitable default. If the note already exists, the editor opens it for editing.
     If the note does not exist, the editor opens a new file using the stand-up template."""
     note = get_note_name(day)
-    date_of_note = "Date: " + day.strftime("%m/%d/%Y") + " \n"
+    date_of_note = "# " + day.strftime("%A, %d %b %Y") + "\n"
     if os.path.exists(note):
         editor.edit(note)
     else:
