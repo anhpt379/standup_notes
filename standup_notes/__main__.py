@@ -113,7 +113,7 @@ def copy_prev(day: date):
     """
     previous_days_note = get_note_name(last_weekday(day))
     note = get_note_name(day)
-    date_of_note = "Date: " + day.strftime("%m/%d/%Y") + " \n"
+    date_of_note = "# " + day.strftime("%A, %d %b %Y") + "\n\n"
     beginning_format = str(STANDUP_TEMPLATE_STRING.splitlines()[0]) + '\n'
     end_format = '\n'.join(STANDUP_TEMPLATE_STRING.splitlines()[2:])
     copy_text = False
@@ -149,7 +149,7 @@ def edit_note(day: date):
     """Launches the default $EDITOR or a suitable default. If the note already exists, the editor opens it for editing.
     If the note does not exist, the editor opens a new file using the stand-up template."""
     note = get_note_name(day)
-    date_of_note = "# " + day.strftime("%A, %d %b %Y") + "\n"
+    date_of_note = "# " + day.strftime("%A, %d %b %Y") + "\n\n"
     if os.path.exists(note):
         editor.edit(note)
     else:
@@ -225,7 +225,7 @@ def post_note(day: date):
     else:
         name = input("Please enter your name: ")
 
-    date_of_note = "Date: " + day.strftime("%m/%d/%Y") + " \n"
+    date_of_note = "# " + day.strftime("%A, %d %b %Y") + "\n\n"
     print("Posting your note")
     myTeamsMessage = pymsteams.connectorcard(link)
     myTeamsMessage.text(name+ "'s standup notes for " + date_of_note)
@@ -236,12 +236,12 @@ def post_note(day: date):
 
     # Create Section 2
     Section2 = pymsteams.cardsection()
-    Section2.activityTitle("What I am doing today")
+    Section2.activityTitle("What I'm going to do today")
     Section2.activityText(get_text(get_note_name(day), 't'))
 
     # Create Section 3
     Section3 = pymsteams.cardsection()
-    Section3.activityTitle("Blockers")
+    Section3.activityTitle("What stops me from finishing my work")
     Section3.activityText(get_blockers(get_note_name(day)))
     # Add both Sections to the main card object
     myTeamsMessage.addSection(Section1)
@@ -280,9 +280,9 @@ def get_text(text, day):
     lines_to_append = []
     text_to_use = []
     if day == 't':
-        text_to_use = ['Blockers', 'What I\'m doing']
+        text_to_use = ['What stops me from finishing my work', "What I'm going to do today"]
     if day == 'y':
-        text_to_use = ['What I\'m doing', 'What I did']
+        text_to_use = ["What I'm going to do today", 'What I did yesterday']
     copy_text = False
     with open(text) as f:
         for line in f:
@@ -303,7 +303,7 @@ def get_blockers(text):
         for line in f:
             if copy_text:
                 lines_to_append.append(line)
-            if 'Blockers' in line:
+            if 'What stops me from finishing my work' in line:
                 copy_text = True
     return "".join(lines_to_append)
 
